@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type Language = "en" | "fi";
 
@@ -317,6 +317,33 @@ const translations: Record<Language, Record<string, string>> = {
     "equipment.cta.h": "Need Specialised Equipment on Your Project?",
     "equipment.cta.desc": "Our fleet is available for client-specific project deployment. Contact our logistics team to check machinery availability.",
     "equipment.cta.btn": "Check Fleet Availability",
+
+    // ─── FOOTER ───────────────────────────────────────────────────
+    "footer.aboutText": "State-of-the-art building infrastructure, residential engineering, and industrial spaces across Finland. Standardizing safety and modernizing engineering since 2008.",
+    "footer.cert1": "RALA Certified Contractor (Finland)",
+    "footer.cert2": "ISO 9001 & ISO 14001 Standards",
+    "footer.companyTitle": "Company",
+    "footer.servicesTitle": "Services",
+    "footer.contactTitle": "Get in Touch",
+    "footer.officeLabel": "HELSINKI HEADQUARTERS",
+    "footer.officeAddress": "Mannerheimintie 12A, 00100 Helsinki, Finland",
+    "footer.newsletterLabel": "Stay updated on industry insights",
+    "footer.newsletterPlaceholder": "Your email address",
+    "footer.copyright": "Rakentra Works. All rights reserved. Registered Finnish Business ID: FI2847192-3.",
+    "footer.privacy": "Privacy Policy",
+    "footer.terms": "Terms of Service",
+    "footer.locations": "Contact Locations",
+    "footer.company.about": "About Us",
+    "footer.company.leadership": "Leadership",
+    "footer.company.safety": "Safety Standards",
+    "footer.company.certs": "Certifications",
+    "footer.company.careers": "Careers",
+    "footer.services.commercial": "Commercial Construction",
+    "footer.services.residential": "Residential Building",
+    "footer.services.industrial": "Industrial Facilities",
+    "footer.services.infrastructure": "Infrastructure Projects",
+    "footer.services.renovation": "Renovations & Retrofits",
+    "footer.services.pm": "Project Management",
   },
 
   fi: {
@@ -615,11 +642,50 @@ const translations: Record<Language, Record<string, string>> = {
     "equipment.cta.h": "Tarvitsetko erikoiskalustoa projektiisi?",
     "equipment.cta.desc": "Kalustomme on käytettävissä asiakaskohtaiseen projektitoimitukseen. Ota yhteyttä logistiikkatiimiin tarkistaaksesi kaluston saatavuus.",
     "equipment.cta.btn": "Tarkista kaluston saatavuus",
+
+    // ─── FOOTER ───────────────────────────────────────────────────
+    "footer.aboutText": "Edistyksellinen rakennusinfrastruktuuri, asuinrakentaminen ja teollisuuskiinteistöt kaikkialla Suomessa. Turvallisuuden standardointi ja insinöörityön modernisointi vuodesta 2008 lähtien.",
+    "footer.cert1": "RALA-sertifioitu urakoitsija (Suomi)",
+    "footer.cert2": "ISO 9001 & ISO 14001 -standardit",
+    "footer.companyTitle": "Yritys",
+    "footer.servicesTitle": "Palvelut",
+    "footer.contactTitle": "Ota yhteyttä",
+    "footer.officeLabel": "HELSINGIN PÄÄTOIMISTO",
+    "footer.officeAddress": "Mannerheimintie 12A, 00100 Helsinki, Suomi",
+    "footer.newsletterLabel": "Pysy ajan tasalla alan oivalluksista",
+    "footer.newsletterPlaceholder": "Sähköpostiosoitteesi",
+    "footer.copyright": "Rakentra Works. Kaikki oikeudet pidätetään. Rekisteröity suomalainen yritys-tunnus: FI2847192-3.",
+    "footer.privacy": "Tietosuojakäytäntö",
+    "footer.terms": "Palveluehdot",
+    "footer.locations": "Yhteystiedot",
+    "footer.company.about": "Tietoa meistä",
+    "footer.company.leadership": "Johtoryhmä",
+    "footer.company.safety": "Turvallisuusstandardit",
+    "footer.company.certs": "Sertifioinnit",
+    "footer.company.careers": "Urat",
+    "footer.services.commercial": "Toimitilarakentaminen",
+    "footer.services.residential": "Asuinrakentaminen",
+    "footer.services.industrial": "Teollisuuslaitokset",
+    "footer.services.infrastructure": "Infrarakentaminen",
+    "footer.services.renovation": "Saneeraukset ja kunnostukset",
+    "footer.services.pm": "Projektinhallinta",
   },
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Language>("en");
+  const [lang, setLang] = useState<Language>(() => {
+    if (typeof window === "undefined") return "en";
+    const stored = window.localStorage.getItem("rakentra-lang");
+    return stored === "fi" ? "fi" : "en";
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("rakentra-lang", lang);
+      document.documentElement.lang = lang;
+    }
+  }, [lang]);
+
   const t = (key: string): string =>
     translations[lang][key] ?? translations["en"][key] ?? key;
 

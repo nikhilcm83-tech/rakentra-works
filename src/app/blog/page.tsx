@@ -125,7 +125,7 @@ export default function BlogPage() {
                         onClick={() => setSelectedArticleId(article.id)}
                         className="inline-flex items-center font-bold uppercase tracking-wider text-orange-accent hover:text-white transition-colors group/btn cursor-pointer"
                       >
-                        Read Article
+                        {t("blog.readMore")}
                         <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover/btn:translate-x-0.5" />
                       </button>
                     </div>
@@ -241,7 +241,7 @@ export default function BlogPage() {
                   onClick={() => setSelectedArticleId(null)}
                   className="px-6 py-2.5 bg-navy-light hover:bg-navy-light/80 text-white text-xs font-bold uppercase tracking-wider rounded border border-white/5 hover:border-white/10 cursor-pointer font-manrope"
                 >
-                  Close Article
+                  {t("blog.close")}
                 </button>
               </div>
 

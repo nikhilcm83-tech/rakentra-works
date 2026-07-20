@@ -37,17 +37,17 @@ export default function CareersPage() {
   };
 
   const benefits = [
-    { title: "Premium Healthcare", desc: "Comprehensive private occupational health plan including mental wellness services." },
-    { title: "Flat Finnish Culture", desc: "Open-door communications, zero micromangement, and respect for work-life balance." },
-    { title: "Learning Subsidies", desc: "Paid certifications (Tekla, BIM, safety qualifications) and university course grants." },
-    { title: "Sauna & Recreation", desc: "Sauna access, ePassi cultural/sport vouchers, and annual archipelago team retreats." }
+    { title: t("careers.benefits.0.title"), desc: t("careers.benefits.0.desc") },
+    { title: t("careers.benefits.1.title"), desc: t("careers.benefits.1.desc") },
+    { title: t("careers.benefits.2.title"), desc: t("careers.benefits.2.desc") },
+    { title: t("careers.benefits.3.title"), desc: t("careers.benefits.3.desc") }
   ];
 
   const recruitmentSteps = [
-    { step: 1, title: "Application Review", desc: "Our recruitment lead reviews your certifications, experience, and background." },
-    { step: 2, title: "Technical Dialogue", desc: "A 45-minute discussion with the engineering lead regarding Eurocodes, BIM, or site management." },
-    { step: 3, title: "Onsite Case Study", desc: "Visit one of our active building projects in Helsinki/Tampere to coordinate on practical topics." },
-    { step: 4, title: "Offer & Onboarding", desc: "Receive contract approval, gear up with premium safety apparel, and meet your crew." }
+    { step: 1, title: t("careers.steps.0.title"), desc: t("careers.steps.0.desc") },
+    { step: 2, title: t("careers.steps.1.title"), desc: t("careers.steps.1.desc") },
+    { step: 3, title: t("careers.steps.2.title"), desc: t("careers.steps.2.desc") },
+    { step: 4, title: t("careers.steps.3.title"), desc: t("careers.steps.3.desc") }
   ];
 
   return (
@@ -81,21 +81,21 @@ export default function CareersPage() {
           <div className="lg:col-span-5 space-y-6">
             <ScrollReveal>
               <div className="space-y-6">
-                <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">CULTURE</span>
+                <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">{t("careers.culture.badge")}</span>
                 <h2 className="text-3xl font-manrope font-extrabold text-white tracking-tight">
-                  Workplace Integrity
+                  {t("careers.culture.h")}
                 </h2>
                 <p className="text-sm text-slate-400 leading-relaxed font-inter">
-                  At Rakentra Works, we believe in technical empowerment, high compensation, and safe working parameters. We trust our engineers to lead their divisions, offering flexibility and state-of-the-art software tools (Tekla, Revit, Solibri) to maximize on-site output.
+                  {t("careers.culture.desc")}
                 </p>
                 <div className="space-y-4 pt-2 font-inter">
                   <div className="flex items-start gap-3">
                     <Users2 className="w-5 h-5 text-orange-accent mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-400"><strong className="text-slate-200">Collaborative Spirit:</strong> Joint coordination between architecture, engineering, and execution.</p>
+                    <p className="text-xs text-slate-400"><strong className="text-slate-200">{t("careers.culture.point1.title")}</strong> {t("careers.culture.point1.desc")}</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <ShieldCheck className="w-5 h-5 text-orange-accent mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-400"><strong className="text-slate-200">Uncompromising Safety:</strong> Daily inspections so every builder returns home safe.</p>
+                    <p className="text-xs text-slate-400"><strong className="text-slate-200">{t("careers.culture.point2.title")}</strong> {t("careers.culture.point2.desc")}</p>
                   </div>
                 </div>
               </div>

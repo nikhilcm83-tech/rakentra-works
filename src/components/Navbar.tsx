@@ -218,10 +218,10 @@ export default function Navbar() {
           <>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black z-40 lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             />
 
             <motion.div
@@ -229,9 +229,9 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-navy-deep border-l border-white/5 z-50 p-6 flex flex-col justify-between overflow-y-auto lg:hidden"
+              className="fixed inset-y-0 right-0 w-full max-w-sm h-screen bg-navy-deep border-l border-white/5 z-50 flex flex-col lg:hidden"
             >
-              <div>
+              <div className="flex-1 overflow-y-auto px-6 pt-6 pb-6">
                 <div className="flex justify-between items-center pb-6 border-b border-white/5">
                   <span className="font-manrope font-extrabold text-2xl tracking-wider text-white">
                     RAKENTRA<span className="text-orange-accent">//</span>
@@ -315,7 +315,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/5 space-y-4">
+              <div className="border-t border-white/5 px-6 py-6 space-y-4 bg-navy-deep/90">
                 <div className="flex items-center gap-3 text-slate-400">
                   <Phone className="w-5 h-5 text-orange-accent" />
                   <span className="text-sm font-medium">+358 10 234 5678</span>

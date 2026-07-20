@@ -54,6 +54,17 @@ export default function ServicesPage() {
           <div className="flex gap-4 sm:gap-6 min-w-max pb-2 sm:pb-0">
             {services.map((service) => {
               const IconComponent = getIcon(service.iconName);
+              const label = service.id === "commercial"
+                ? t("nav.commercial")
+                : service.id === "residential"
+                  ? t("nav.residential")
+                  : service.id === "industrial"
+                    ? t("nav.industrial")
+                    : service.id === "infrastructure"
+                      ? t("nav.infrastructure")
+                      : service.id === "renovation"
+                        ? t("nav.renovation")
+                        : t("nav.projectManagement");
               return (
                 <a 
                   key={service.id}
@@ -61,7 +72,7 @@ export default function ServicesPage() {
                   className="flex items-center gap-2 px-4 py-2 bg-navy-light/40 border border-white/5 hover:border-orange-accent/40 rounded-md text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all duration-200"
                 >
                   <IconComponent className="w-4 h-4 text-orange-accent" />
-                  <span>{service.title.split(' ')[0]}</span>
+                  <span>{label}</span>
                 </a>
               );
             })}

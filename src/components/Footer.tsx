@@ -2,25 +2,27 @@
 
 import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, CheckCircle } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const companyLinks = [
-    { name: "About Us", href: "/about" },
-    { name: "Leadership", href: "/about#leadership" },
-    { name: "Safety Standards", href: "/about#safety" },
-    { name: "Certifications", href: "/about#certifications" },
-    { name: "Careers", href: "/careers" },
+    { name: t("footer.company.about"), href: "/about" },
+    { name: t("footer.company.leadership"), href: "/about#leadership" },
+    { name: t("footer.company.safety"), href: "/about#safety" },
+    { name: t("footer.company.certs"), href: "/about#certifications" },
+    { name: t("footer.company.careers"), href: "/careers" },
   ];
 
   const serviceLinks = [
-    { name: "Commercial Construction", href: "/services#commercial" },
-    { name: "Residential Building", href: "/services#residential" },
-    { name: "Industrial Facilities", href: "/services#industrial" },
-    { name: "Infrastructure Projects", href: "/services#infrastructure" },
-    { name: "Renovations & Retrofits", href: "/services#renovation" },
-    { name: "Project Management", href: "/services#pm" },
+    { name: t("footer.services.commercial"), href: "/services#commercial" },
+    { name: t("footer.services.residential"), href: "/services#residential" },
+    { name: t("footer.services.industrial"), href: "/services#industrial" },
+    { name: t("footer.services.infrastructure"), href: "/services#infrastructure" },
+    { name: t("footer.services.renovation"), href: "/services#renovation" },
+    { name: t("footer.services.pm"), href: "/services#pm" },
   ];
 
   return (
@@ -37,17 +39,17 @@ export default function Footer() {
               RAKENTRA<span className="text-orange-accent">//</span>
             </span>
             <p className="text-sm text-slate-400 leading-relaxed">
-              State-of-the-art building infrastructure, residential engineering, and industrial spaces across Finland. Standardizing safety and modernizing engineering since 2008.
+              {t("footer.aboutText")}
             </p>
             {/* Certifications highlights */}
             <div className="pt-2 space-y-2">
               <div className="flex items-center gap-2 text-xs text-slate-300">
                 <ShieldCheck className="w-4 h-4 text-orange-accent" />
-                <span>RALA Certified Contractor (Finland)</span>
+                <span>{t("footer.cert1")}</span>
               </div>
               <div className="flex items-center gap-2 text-xs text-slate-300">
                 <CheckCircle className="w-4 h-4 text-orange-accent" />
-                <span>ISO 9001 & ISO 14001 Standards</span>
+                <span>{t("footer.cert2")}</span>
               </div>
             </div>
           </div>
@@ -55,7 +57,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-sm font-bold tracking-wider uppercase text-white mb-6 border-l-2 border-orange-accent pl-3">
-              Company
+              {t("footer.companyTitle")}
             </h3>
             <ul className="space-y-3.5">
               {companyLinks.map((link) => (
@@ -74,7 +76,7 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h3 className="text-sm font-bold tracking-wider uppercase text-white mb-6 border-l-2 border-orange-accent pl-3">
-              Services
+              {t("footer.servicesTitle")}
             </h3>
             <ul className="space-y-3.5">
               {serviceLinks.map((link) => (
@@ -93,14 +95,14 @@ export default function Footer() {
           {/* Contact Details & Newsletter */}
           <div className="space-y-6">
             <h3 className="text-sm font-bold tracking-wider uppercase text-white mb-6 border-l-2 border-orange-accent pl-3">
-              Get in Touch
+              {t("footer.contactTitle")}
             </h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-orange-accent shrink-0 mt-0.5" />
                 <div className="text-sm text-slate-400 leading-relaxed">
-                  <strong className="text-slate-200 block text-xs">HELSINKI HEADQUARTERS</strong>
-                  Mannerheimintie 12A, 00100 Helsinki, Finland
+                  <strong className="text-slate-200 block text-xs">{t("footer.officeLabel")}</strong>
+                  {t("footer.officeAddress")}
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -116,13 +118,13 @@ export default function Footer() {
             {/* Aesthetic News Signup */}
             <div className="pt-2">
               <label htmlFor="footer-email" className="block text-xs font-semibold text-slate-300 uppercase mb-2">
-                Stay updated on industry insights
+                {t("footer.newsletterLabel")}
               </label>
               <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
                 <input 
                   type="email" 
                   id="footer-email"
-                  placeholder="Your email address" 
+                  placeholder={t("footer.newsletterPlaceholder")} 
                   className="bg-navy-light/50 border border-white/10 rounded px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-accent/50 w-full"
                 />
                 <button 
@@ -140,12 +142,12 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-xs text-slate-500 text-center md:text-left">
-            &copy; {currentYear} Rakentra Works. All rights reserved. Registered Finnish Business ID: FI2847192-3.
+            &copy; {currentYear} {t("footer.copyright")}
           </p>
           <div className="flex gap-6 text-xs text-slate-500">
-            <Link href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-slate-300 transition-colors">Contact Locations</Link>
+            <Link href="/privacy" className="hover:text-slate-300 transition-colors">{t("footer.privacy")}</Link>
+            <Link href="/terms" className="hover:text-slate-300 transition-colors">{t("footer.terms")}</Link>
+            <Link href="/contact" className="hover:text-slate-300 transition-colors">{t("footer.locations")}</Link>
           </div>
         </div>
       </div>

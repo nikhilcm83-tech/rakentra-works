@@ -10,57 +10,57 @@ export default function AboutPage() {
   const timelineMilestones = [
     {
       year: "2008",
-      title: "Company Foundation",
-      desc: "Rakentra Works was founded in Helsinki by a group of senior civil engineers, focusing on commercial office masonry and concrete frame projects."
+      title: t("about.timeline.0.title"),
+      desc: t("about.timeline.0.desc")
     },
     {
       year: "2012",
-      title: "First €10M Breakthrough",
-      desc: "Contracted to build the Espoo Logistics Terminal, our first large-scale structural project, completed 3 weeks ahead of schedule."
+      title: t("about.timeline.1.title"),
+      desc: t("about.timeline.1.desc")
     },
     {
       year: "2016",
-      title: "Expansion to Tampere & RALA",
-      desc: "Opened our Tampere regional office to manage growing industrial demands. Received our first official RALA contractor certification."
+      title: t("about.timeline.2.title"),
+      desc: t("about.timeline.2.desc")
     },
     {
       year: "2020",
-      title: "Heavy Industrial division",
-      desc: "Launched our specialized Heavy Industrial and Infrastructure division to construct chemical facilities and public civil bridge works."
+      title: t("about.timeline.3.title"),
+      desc: t("about.timeline.3.desc")
     },
     {
       year: "2025",
-      title: "Full BIM Integration",
-      desc: "Standardized 100% of our planning processes into Level 3 BIM (Building Information Modeling) and launched geothermal heat recovery systems."
+      title: t("about.timeline.4.title"),
+      desc: t("about.timeline.4.desc")
     }
   ];
 
   const leadership = [
     {
       name: "Jari Rajamäki",
-      role: "CEO & Co-Founder",
+      role: t("about.leadership.0.role"),
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop",
-      bio: "25+ years in civil engineering. Ex-YIT Projects Director. Oversees corporate strategy and municipality relations."
+      bio: t("about.leadership.0.bio")
     },
     {
       name: "Laura Hämäläinen",
-      role: "Chief Operating Officer",
+      role: t("about.leadership.1.role"),
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop",
-      bio: "Specializes in supply chain mechanics and large-scale industrial project scheduling. Sweco alumna."
+      bio: t("about.leadership.1.bio")
     },
     {
       name: "Hannu Rajala",
-      role: "Director of HSE & Safety",
+      role: t("about.leadership.2.role"),
       image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=300&auto=format&fit=crop",
-      bio: "Pioneered Finland's Arctic Winter Safety Protocols. Oversees our zero-accident site audits."
+      bio: t("about.leadership.2.bio")
     }
   ];
 
   const certifications = [
-    { name: "RALA Quality Certification", body: "Rakentamisen Laatu RALA ry", code: "Reg #2849", desc: "Recognizes high standards in technical capability, financial stability, and quality control." },
-    { name: "ISO 9001:2015", body: "SFS Certification", code: "ISO 9001", desc: "International standard for structural quality management systems." },
-    { name: "ISO 14001:2015", body: "SFS Certification", code: "ISO 14001", desc: "Validation of our green building waste reduction and carbon mitigation metrics." },
-    { name: "Safe Contractor FI", body: "Finnish Occupational Safety", code: "HSE-Gold", desc: "Top-tier rating for zero-accident protocols and on-site workforce protection." }
+    { name: t("about.certs.0.name"), body: t("about.certs.0.body"), code: t("about.certs.0.code"), desc: t("about.certs.0.desc") },
+    { name: t("about.certs.1.name"), body: t("about.certs.1.body"), code: t("about.certs.1.code"), desc: t("about.certs.1.desc") },
+    { name: t("about.certs.2.name"), body: t("about.certs.2.body"), code: t("about.certs.2.code"), desc: t("about.certs.2.desc") },
+    { name: t("about.certs.3.name"), body: t("about.certs.3.body"), code: t("about.certs.3.code"), desc: t("about.certs.3.desc") }
   ];
 
   return (
@@ -208,7 +208,7 @@ export default function AboutPage() {
                         </div>
                         <div className="mt-4 pt-3 border-t border-white/5 flex items-center gap-1.5 text-xs text-slate-300">
                           <ShieldCheck className="w-4 h-4 text-orange-accent" />
-                          <span className="font-manrope">Verified Compliant</span>
+                          <span className="font-manrope">{t("about.certs.verified")}</span>
                         </div>
                       </div>
                     </ScrollReveal>
@@ -260,7 +260,7 @@ export default function AboutPage() {
                         </p>
                         <div className="pt-3 border-t border-white/5 flex items-center gap-2 text-xs text-slate-400">
                           <UserCheck className="w-4 h-4 text-orange-accent" />
-                          <span className="font-manrope">RALA Audited Signatory</span>
+                          <span className="font-manrope">{t("about.certs.signatory")}</span>
                         </div>
                       </div>
                     </div>

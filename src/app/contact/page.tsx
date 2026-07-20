@@ -201,7 +201,7 @@ export default function ContactPage() {
                 {/* Area range slider */}
                 <div className="space-y-3 pt-2">
                   <div className="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-wider font-manrope">
-                    <span>Floor Area Range</span>
+                    <span>{t("contact.estimator.range")}</span>
                     <span className="text-white text-sm font-manrope bg-navy-light/80 border border-white/5 px-2 py-0.5 rounded">
                       {estArea.toLocaleString("fi-FI")} m²
                     </span>
