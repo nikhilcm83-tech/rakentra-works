@@ -11,7 +11,7 @@ import { FadeIn, ScrollReveal, StaggerContainer, ScaleHover } from "@/components
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function CareersPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
   const [isApplied, setIsApplied] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,6 +35,49 @@ export default function CareersPage() {
       setFormData({ name: "", email: "", phone: "", linkedin: "", coverLetter: "" });
     }, 2500);
   };
+
+  const localizedPositions = openPositions.map((pos) => {
+    if (lang === "fi") {
+      switch (pos.id) {
+        case "site-manager":
+          return {
+            ...pos,
+            title: "Senior Site Manager (Vastaava Työnjohtaja)",
+            department: "Kauppallinen & asuinrakentaminen",
+            location: "Helsinki, Suomi",
+            type: "Kokoaikainen",
+            desc: "Etsimme kokenutta vastaavaa työnjohtajaa johtamaan premium kerrostalo- ja toimistokotirakennusprojekteja Helsingin metropolialueella.",
+            requirements: ["Rakennusinsinööri / rakennusmestari", "Vähintään 6 vuoden kokemusta työmaanjohtamisesta Suomessa", "Sujuva suomenkieli ja hyvä englannin taito", "Aktiivinen RALA-turvallisuuskortti", "Hyvä BIM-käyttökokemus työmaalla"],
+            responsibilities: ["Varmistaa turvallisuus, aikataulu ja laadunormeihin noudattaminen", "Johtaa päivittäisiä työmaapalavereja", "Tarkistaa suunnitelmat ja ratkaisee 3D-BIM-ristiriidat", "Koordinoi kuntatarkastuksia ja luovutuslupia"]
+          };
+        case "structural-engineer":
+          return {
+            ...pos,
+            title: "Rakennesuunnittelija",
+            department: "Insinöörit & suunnittelu",
+            location: "Tampere, Suomi",
+            type: "Kokoaikainen / hybridi",
+            desc: "Liity sisäiseen suunnitteluryhmäämme suunnittelemaan teräs- ja betonirakenteita suurille teollisuus- ja vihreän energian projekteille.",
+            requirements: ["DI tai MSc-rakennesuunnittelu", "3+ vuoden kokemus kuormittavien teräs- tai betonirakenteiden suunnittelusta", "Tekla Structures, FEM-Design tai Robot Structural Analysis", "Tuntemus Eurokoodeista ja Suomen rakennusmääräyksistä", "Hyvä englannin tai suomenkielen kommunikaatiotaito"],
+            responsibilities: ["Luo rakenneanalyysipaketteja perustuksille ja palkille", "Kehittää yksityiskohtaisia 3D-malleja valmistajille", "Yhteistyössä arkkitehtien kanssa", "Tekee työmaakäyntejä ennen valuja"]
+          };
+        case "bim-coordinator":
+          return {
+            ...pos,
+            title: "BIM-koordinaattori / asiantuntija",
+            department: "Projektipalvelut & teknologia",
+            location: "Helsinki, Suomi",
+            type: "Kokoaikainen",
+            desc: "Valvoo digitaalista layout-työkalua ja koordinoi BIM-prosesseja arkkitehtonisten, MEP- ja rakennesuunnitelmien välillä.",
+            requirements: ["Tutkinto arkkitehtuurista, tekniikasta tai CAD/BIM-teknologiasta", "Laaja kokemus Revitistä, Navisworkista ja Solibri Model Checkerista", "IFC-standardeista ja openBIM-periaatteista", "Kokemus clash-detection-koordinaatiosta suurissa projekteissa"],
+            responsibilities: ["Yhdistää arkkitehtuurin, rakenteen ja MEP-mallit", "Tekee clash-detection-tarkastuksia", "Tarkastaa mallien tiedonlaadun", "Auttaa työmaapäälliköitä mobiili-BIM-työkalujen käytössä"]
+          };
+        default:
+          return pos;
+      }
+    }
+    return pos;
+  });
 
   const benefits = [
     { title: t("careers.benefits.0.title"), desc: t("careers.benefits.0.desc") },
@@ -141,7 +184,7 @@ export default function CareersPage() {
 
           <StaggerContainer>
             <div className="space-y-8 max-w-5xl mx-auto">
-              {openPositions.map((pos) => (
+              {localizedPositions.map((pos) => (
                 <ScrollReveal key={pos.id}>
                   <ScaleHover>
                     <div 

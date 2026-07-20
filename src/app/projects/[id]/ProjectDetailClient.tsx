@@ -10,7 +10,73 @@ interface ProjectDetailClientProps {
 }
 
 export default function ProjectDetailClient({ project }: ProjectDetailClientProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localizedProject = {
+    ...project,
+    category: lang === "fi"
+      ? project.category === "Commercial"
+        ? t("projects.category.commercial")
+        : project.category === "Residential"
+          ? t("projects.category.residential")
+          : project.category === "Industrial"
+            ? t("projects.category.industrial")
+            : project.category === "Infrastructure"
+              ? t("projects.category.infrastructure")
+              : project.category === "Renovation"
+                ? t("projects.category.renovation")
+                : project.category
+      : project.category,
+    title: lang === "fi"
+      ? project.id === "tampere-battery-factory"
+        ? "Tampereen vihreä akkuplantti"
+        : project.title
+      : project.title,
+    location: lang === "fi"
+      ? project.id === "tampere-battery-factory"
+        ? "Hervanta, Tampere"
+        : project.location
+      : project.location,
+    overview: lang === "fi"
+      ? project.id === "helsinki-innovation-hub"
+        ? "Lippulaivakaupallinen toimistokeskus, joka on suunniteltu suomalaisille startup-yrityksille ja kansainvälisille tutkimusryhmille."
+        : project.id === "tampere-battery-factory"
+          ? "Monimutkainen teollisuuslaitos, joka on tarkoitettu litiumioniakkujen valmistukseen sähköalustoille."
+          : project.id === "espoo-marina-residences"
+            ? "Premium-vesirantainen asuntokehitys, jossa on 48 luksusasuntoa ja integroituja saunoja."
+            : project.id === "oulu-light-rail"
+              ? "Kriittinen infrastruktuurihanke, joka yhdistää esijännitetyn betonisillan ja uuden raitiotieyhteyden."
+              : project.id === "turku-heritage-hotel"
+                ? "Huolellinen historiallinen restaurointi, joka yhdistää nykyaikaisen teknologian suojeltuun julkisivuun."
+                : project.overview
+      : project.overview,
+    outcome: lang === "fi"
+      ? project.id === "helsinki-innovation-hub"
+        ? "Toimitettiin kaksi viikkoa etuajassa. Rakennus saavutti ennätyksellisen matalan lämpöhäviöindeksin ja on sertifioitu LEED Platinum -tasoiseksi."
+        : project.id === "tampere-battery-factory"
+          ? "Työmaa on viimeisessä käyttöönottofaasissa. Kompleksi yhdistää huipputeknologiset prosessinkäsittelyjärjestelmät." 
+          : project.id === "espoo-marina-residences"
+            ? "Valmistui budjetin puitteissa. Rakennus saavutti erinomaisen ilmatiiviyden ja yksityiset venepaikat." 
+            : project.id === "oulu-light-rail"
+              ? "Jatkuu. Siltaosat on onnistuneesti kiinnitetty ja käytämme erikoisluonteista suolasuojattua betonia."
+              : project.id === "turku-heritage-hotel"
+                ? "Valmistui aikataulussa. Rakennus omaa luokan A paloturvallisuuden ja modernin ilmastoinnin." 
+                : project.outcome
+      : project.outcome,
+    benefits: lang === "fi"
+      ? project.id === "helsinki-innovation-hub"
+        ? ["40 % alhaisemmat lämmityskustannukset", "BREEAM Outstanding ja LEED Platinum -sertifikaatti", "Modulaariset väliseinät mahdollistaen uudelleensuunnittelun 48 tunnissa", "Geotermiset poraukset kattavat 80 % kesäajan jäähdytyksestä"]
+        : project.id === "tampere-battery-factory"
+          ? ["Vibration-isolated foundations safeguarding nanoscale calibration equipment", "2.4MW rooftop solar installation reducing power grid reliance", "Explosion-resistant reinforced concrete separation walls", "Smart moisture control systems keeping dryrooms below 1% relative humidity"]
+          : project.id === "espoo-marina-residences"
+            ? ["Vesivara- lämpöpumppu", "Äänieristys vähentää melua 58 dB", "Integroitu älytalousjärjestelmä", "Premium paikallinen kuusiulkoasu"]
+            : project.id === "oulu-light-rail"
+              ? ["Vähentää kuljetusaikaa 15 minuuttia", "Valvontaa antavat kuituoptiset anturit", "Matala melutaso", "Soveltuu pyöräily- ja kävelyväylille"]
+              : project.id === "turku-heritage-hotel"
+                ? ["Suojaamaton historiallinen julkisivu säilytetty", "Geoterminen lämmitys kattaa 90 % lämmitystarpeesta", "Automaattinen palosuojajärjestelmä", "Parannettu lämmöneristys"]
+                : project.benefits
+      : project.benefits
+  };
 
   return (
     <div className="bg-navy-deep min-h-screen text-slate-200">
@@ -30,10 +96,10 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           </Link>
           <div className="space-y-2">
             <span className="px-2.5 py-1 bg-orange-accent text-white text-[10px] font-bold uppercase tracking-wider rounded">
-              {project.category}
+              {localizedProject.category}
             </span>
             <h1 className="text-4xl sm:text-5xl font-manrope font-extrabold text-white tracking-tight leading-tight">
-              {project.title}
+              {localizedProject.title}
             </h1>
           </div>
         </div>
@@ -47,7 +113,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 {t("project.overview")}
               </h2>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                {project.overview}
+                {localizedProject.overview}
               </p>
             </div>
 
@@ -96,10 +162,10 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
               </h2>
               <div className="p-6 sm:p-8 rounded-lg border border-white/10 space-y-6" style={{ background: "linear-gradient(135deg, #111827 0%, #0D1424 100%)" }}>
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  {project.outcome}
+                  {localizedProject.outcome}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-white/5 pt-6 text-xs text-slate-400">
-                  {project.benefits.map((b, idx) => (
+                  {localizedProject.benefits.map((b, idx) => (
                     <div key={idx} className="flex items-start gap-2">
                       <CheckCircle className="w-4.5 h-4.5 text-orange-accent shrink-0 mt-0.5" />
                       <span className="leading-relaxed text-slate-300">{b}</span>
@@ -127,7 +193,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                   <span className="block text-[10px] uppercase tracking-wider text-slate-500">{t("project.location")}</span>
                   <span className="text-sm font-bold text-slate-200 flex items-center gap-1.5 mt-0.5">
                     <MapPin className="w-4.5 h-4.5 text-orange-accent" />
-                    {project.location}
+                    {localizedProject.location}
                   </span>
                 </div>
 

@@ -9,7 +9,65 @@ import { FadeIn, ScrollReveal, StaggerContainer } from "@/components/Animate";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localizedServices = services.map((service) => {
+    if (lang === "fi") {
+      switch (service.id) {
+        case "commercial":
+          return { ...service, title: "Toimitilarakentaminen", overview: "Suunnittelemme ja rakennamme moderneja toimistotorneja, vähittäiskeskuksia, liikekeskuksia ja monikäyttöisiä kehityshankkeita.", benefits: ["LEED- ja BREEAM-sertifiointi taataan", "Joustavat arkkitehtoniset rakenteet tulevaa muuntamista varten", "Edistyksellinen LVI- ja älyvalaistusautomaatio", "Erittäin tehokas lämpöeristys (pohjoismainen standardi)"], process: [
+            { step: 1, name: "Konsultointi & toteutettavuus", desc: "Sivustoanalyysit, alkusuunnitelmat ja budjettiprojektiot." },
+            { step: 2, name: "BIM-mallinnus & arkkitehtuuri", desc: "Yksityiskohtainen 3D-suunnittelu putkistoista, sähköistä ja rakenteellisista parametreista." },
+            { step: 3, name: "Perustukset & ydinkorjaus", desc: "Kaivuu, paalutus ja esivalmistettujen betonirunkojen asennus." },
+            { step: 4, name: "Julkisivut & sisätilojen viimeistely", desc: "Kolmekerroksiset lasiasennukset, väliseinät ja älyjärjestelmät." },
+            { step: 5, name: "Luovutus & toiminta", desc: "Viimeistelytarkastukset, RALA-lista ja energiatodistukset." }
+          ] };
+        case "residential":
+          return { ...service, title: "Asuinrakentaminen", overview: "Luxusvinttisistä rantatonteista premium kerrostaloihin — Rakentra tunnetaan korkeatasoisesta asumisesta Suomessa.", benefits: ["Mukautettu premium-materiaalitoimitus", "Optimaalinen aurinkopaneeliasento ja lämmön talteenotto", "Poikkeuksellinen ääneneristys", "Laajennettu 10 vuoden rakenteellinen takuu"], process: [
+            { step: 1, name: "Arkkitehtoninen kartoittaminen", desc: "Yhteistyö suomalaisten suunnittelijoiden kanssa." },
+            { step: 2, name: "Rakenteelliset laskelmat", desc: "Rungot kestämään raskaat talvi- ja tuulikuormat." },
+            { step: 3, name: "Runko & eristys", desc: "Tarkka asennus korkean tiheyden eristykseen ja puu-/betonielementteihin." },
+            { step: 4, name: "Räätälöity viimeistely", desc: "Korkealaatuinen lattialämmitys ja erikoissaunat." },
+            { step: 5, name: "Laadun auditointi", desc: "Itsenäinen ilmatiiviyden testaus." }
+          ] };
+        case "industrial":
+          return { ...service, title: "Teollisuus & logistiikka", overview: "Rakennamme raskaita tuotantolaitoksia, automaattisia logistiikkavarastoja ja puhtaiden teknologioiden energiahuoneita.", benefits: ["Vahvistettu betonilattia, kantavuus jopa 100 kN/m²", "Suuret terästrussirakenteet", "HSE-yhteensopivat hätä- ja vaarallisten materiaalien layoutit", "Integroitu aurinkokatto ja geoterminen lämmitys"], process: [
+            { step: 1, name: "Teollisuusprosessianalyysi", desc: "Tuotantovirtojen ymmärtäminen optimoimiseksi." },
+            { step: 2, name: "Raskas rakennesuunnittelu", desc: "Teräsrunkoverkon, paalutuksen ja konepohjien suunnittelu." },
+            { step: 3, name: "Teräsrungon pystytys", desc: "Korkealaatuisten teräsrakenteiden nostaminen ja kiinnitys." },
+            { step: 4, name: "Seinäpaneeli ja kattorakenne", desc: "Palosuojatut sandwich-paneelit ja eristetyt katot." },
+            { step: 5, name: "Erikoisfitout & toimitus", desc: "Raskaat kuormauspisteet, gantry-kiskot ja ilmanvaihto." }
+          ] };
+        case "infrastructure":
+          return { ...service, title: "Siviili-infrastruktuuri", overview: "Yhdistämme Suomen yhteisöjä kestävillä teillä, suurkuormitusraiteilla, silloilla ja julkisilla liikennekeskuksilla.", benefits: ["Pakkasen aiheuttamaa routaeroosiota vastaan suunnitellut perustukset", "Korkealaatuinen betonilaatu vastustaa suolankäyttöä", "Minimaalinen ympäristövaikutus", "Kymmeniä vuosia kestäviä kunnallisia sopimuksia"], process: [
+            { step: 1, name: "Geologinen kartoitus", desc: "Maaperän ja kallion tutkiminen." },
+            { step: 2, name: "Ympäristövaikutusten arviointi", desc: "Julkiset luvat ja luontopääsyjen suunnittelu." },
+            { step: 3, name: "Kallion ankkurointi & kaivu", desc: "Rakentaminen ja syväperustusten varmistus." },
+            { step: 4, name: "Siviilirakenteiden kokoaminen", desc: "Betonipylväät ja esijännitetyt sillanpalkit." },
+            { step: 5, name: "Päällystys & testaus", desc: "Kestävä asfaltti, turvallisuusesteet ja venymämittarit." }
+          ] };
+        case "renovation":
+          return { ...service, title: "Perinnesarja- ja saneeraus", overview: "Kunnostamme ja modernisoimme olemassa olevia rakenteita säilyttäen historialliset julkisivut.", benefits: ["Yhteistyö museo- ja suojelutoimijoiden kanssa", "Nihkeät rakenteelliset vahvistustekniikat", "Moderni LVI ja paloilmaisin integroituna", "Historiallisten rakennusten luokka A -energia"], process: [
+            { step: 1, name: "Historiallinen auditointi", desc: "Alkuperäisen arkkitehtuurin kartoitus." },
+            { step: 2, name: "Suojelu- ja suunnitteluyhteistyö", desc: "Yhteistyö kaupunkisuunnitteluviranomaisten kanssa." },
+            { step: 3, name: "Vakaus & purku", desc: "Julkisivujen suojaus ja vaurioituneiden materiaalien poistaminen." },
+            { step: 4, name: "Tekninen retrofit", desc: "Putkistojen ja energiatehokkaiden ratkaisujen asentaminen." },
+            { step: 5, name: "Taiteellinen viimeistely", desc: "Puupinnan ja kivien palauttaminen alkuperäiseen muotoon." }
+          ] };
+        case "pm":
+          return { ...service, title: "Projektinhallinta", overview: "Kokonaisvaltainen projektinhallinta monimutkaisissa rakennushankkeissa aina suunnittelusta luovutukseen.", benefits: ["Yksi yhteyshenkilö suunnittelusta luovutukseen", "Edistynyt ERP-seuranta", "Kattava riski- ja vastuuratkaisut", "Täydellinen säädös- ja turvallisuusdokumentaatio"], process: [
+            { step: 1, name: "Projektin määrittely", desc: "Tavoitteet, aikataulut ja riskiprofiilit." },
+            { step: 2, name: "Aliurakoitsijoiden hankinta", desc: "Top-tier-alihankkijoiden ja tavarantoimittajien valinta." },
+            { step: 3, name: "Päivittäinen operatiivinen ohjaus", desc: "Työmaan koordinointi ja turvallisuuspalaverit." },
+            { step: 4, name: "Edistymisraportit", desc: "Kahden viikon välein toimitettavat raportit." },
+            { step: 5, name: "Käyttöönotto & luovutus", desc: "Viralliset tarkastukset ja dokumentaatiopaketit." }
+          ] };
+        default:
+          return service;
+      }
+    }
+    return service;
+  });
 
   const getIcon = (name: string) => {
     switch (name) {
@@ -52,7 +110,7 @@ export default function ServicesPage() {
       <section className="py-8 bg-navy-deep/80 backdrop-blur-md sticky top-[72px] z-30 border-b border-white/5 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
           <div className="flex gap-4 sm:gap-6 min-w-max pb-2 sm:pb-0">
-            {services.map((service) => {
+            {localizedServices.map((service) => {
               const IconComponent = getIcon(service.iconName);
               const label = service.id === "commercial"
                 ? t("nav.commercial")
@@ -82,7 +140,7 @@ export default function ServicesPage() {
 
       {/* 3. DETAILED SERVICES LAYOUT */}
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
-        {services.map((service, serviceIdx) => {
+        {localizedServices.map((service, serviceIdx) => {
           const IconComponent = getIcon(service.iconName);
           const isEven = serviceIdx % 2 === 0;
 

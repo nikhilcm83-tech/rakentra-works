@@ -11,7 +11,7 @@ import { useLanguage } from "@/context/LanguageContext";
 function PortfolioGrid() {
   const searchParams = useSearchParams();
   const filterParam = searchParams.get("filter");
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const [activeFilter, setActiveFilter] = useState<string>("All");
 
@@ -25,9 +25,43 @@ function PortfolioGrid() {
 
   const categories = ["All", "Commercial", "Residential", "Industrial", "Infrastructure"];
 
+  const projectsData = projects.map((project) => {
+    const category = lang === "fi"
+      ? project.category === "Commercial"
+        ? t("projects.category.commercial")
+        : project.category === "Residential"
+          ? t("projects.category.residential")
+          : project.category === "Industrial"
+            ? t("projects.category.industrial")
+            : project.category === "Infrastructure"
+              ? t("projects.category.infrastructure")
+              : project.category === "Renovation"
+                ? t("projects.category.renovation")
+                : project.category
+      : project.category;
+
+    if (lang === "fi") {
+      switch (project.id) {
+        case "helsinki-innovation-hub":
+          return { ...project, category, overview: "Lippulaivakaupallinen toimistokeskus, joka on suunniteltu suomalaisille startup-yrityksille ja kansainvälisille tutkimusryhmille." };
+        case "tampere-battery-factory":
+          return { ...project, category, title: "Tampereen vihreä akkuplantti", location: "Hervanta, Tampere", overview: "Monimutkainen teollisuuslaitos, joka on tarkoitettu litiumioniakkujen valmistukseen sähköalustoille." };
+        case "espoo-marina-residences":
+          return { ...project, category, overview: "Premium-vesirantainen asuntokehitys, jossa on 48 luksusasuntoa ja integroituja saunoja." };
+        case "oulu-light-rail":
+          return { ...project, category, overview: "Kriittinen infrastruktuurihanke, joka yhdistää esijännitetyn betonisillan ja uuden raitiotieyhteyden." };
+        case "turku-heritage-hotel":
+          return { ...project, category, overview: "Huolellinen historiallinen restaurointi, joka yhdistää nykyaikaisen teknologian suojeltuun julkisivuun." };
+        default:
+          return { ...project, category };
+      }
+    }
+    return { ...project, category };
+  });
+
   const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
+    ? projectsData 
+    : projectsData.filter(p => p.category === activeFilter);
 
   return (
     <div className="space-y-12">

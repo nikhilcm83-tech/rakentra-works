@@ -9,7 +9,7 @@ import { FadeIn, ScrollReveal } from "@/components/Animate";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function ContactPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [activeOffice, setActiveOffice] = useState<"helsinki" | "tampere">("helsinki");
   const [isSubmitted, setIsSubmitted] = useState(false);
   
@@ -70,6 +70,20 @@ export default function ContactPage() {
   };
 
   const currentEst = runCalculation();
+
+  const localizedCategoryLabels = {
+    Commercial: lang === "fi" ? "Toimitilat" : "Commercial",
+    Residential: lang === "fi" ? "Asuinrakennukset" : "Residential",
+    Industrial: lang === "fi" ? "Teollisuus" : "Industrial",
+    Infrastructure: lang === "fi" ? "Infrastruktuuri" : "Infrastructure",
+    Renovation: lang === "fi" ? "Saneeraus" : "Renovation"
+  };
+
+  const localizedQualityOptions = [
+    { grade: "Standard", desc: lang === "fi" ? "Perus-Eurokoodi ja suomalaiset standardit." : "Basic Eurocode & Finnish standards." },
+    { grade: "Premium", desc: lang === "fi" ? "RALA-sertifioitu, BIM-taso 3 -optimointi." : "RALA Certified, Level 3 BIM optimization." },
+    { grade: "Ultra", desc: lang === "fi" ? "Arktinen eristys, maksimaalinen lämmön talteenotto." : "Arctic Insulation, maximum heat recovery." }
+  ];
 
   // Pre-fill form from estimator values
   const applyEstimatesToForm = () => {
@@ -192,7 +206,7 @@ export default function ContactPage() {
                             : "bg-navy-light/40 text-slate-400 border-white/5 hover:text-white"
                         }`}
                       >
-                        {cat}
+                        {localizedCategoryLabels[cat as keyof typeof localizedCategoryLabels]}
                       </button>
                     ))}
                   </div>
@@ -226,11 +240,7 @@ export default function ContactPage() {
                 <div className="space-y-2 pt-2">
                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider font-manrope">{t("contact.estimator.qualityLabel")}</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {[
-                      { grade: "Standard", desc: "Basic Eurocode & Finnish standards." },
-                      { grade: "Premium", desc: "RALA Certified, Level 3 BIM optimization." },
-                      { grade: "Ultra", desc: "Arctic Insulation, maximum heat recovery." }
-                    ].map((item) => (
+                    {localizedQualityOptions.map((item) => (
                       <button
                         key={item.grade}
                         type="button"
@@ -293,32 +303,32 @@ export default function ContactPage() {
                   {/* Calculations */}
                   <div className="space-y-4">
                     <div>
-                      <span className="block text-[10px] uppercase tracking-wider text-slate-400 font-semibold font-manrope">Estimated Budget Projection</span>
+                      <span className="block text-[10px] uppercase tracking-wider text-slate-400 font-semibold font-manrope">{t("contact.estimator.projection")}</span>
                       <div className="text-3xl sm:text-4xl font-extrabold text-orange-accent tracking-tight font-manrope mt-1">
                         {currentEst.total.toLocaleString("fi-FI", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })}
                       </div>
-                      <span className="text-[9px] text-slate-500 block mt-0.5 uppercase tracking-wider">Estimated rate: ~{Math.round(currentEst.total / estArea)} €/m²</span>
+                      <span className="text-[9px] text-slate-500 block mt-0.5 uppercase tracking-wider">{t("contact.estimator.rate")}: ~{Math.round(currentEst.total / estArea)} €/m²</span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-4 text-xs font-manrope">
                       <div>
-                        <span className="block text-[10px] uppercase tracking-wider text-slate-500">Duration Range</span>
+                        <span className="block text-[10px] uppercase tracking-wider text-slate-500">{t("contact.estimator.duration")}</span>
                         <span className="text-sm font-bold text-white block mt-1">{currentEst.duration} Months</span>
                       </div>
                       <div>
-                        <span className="block text-[10px] uppercase tracking-wider text-slate-500">Eurocode compliance</span>
-                        <span className="text-sm font-bold text-white block mt-1">Grade-A Verified</span>
+                        <span className="block text-[10px] uppercase tracking-wider text-slate-500">{t("contact.estimator.compliance")}</span>
+                        <span className="text-sm font-bold text-white block mt-1">{t("contact.estimator.complianceValue")}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Cost breakdown charts */}
                   <div className="space-y-3 pt-2 font-manrope">
-                    <span className="block text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Budget Allocation Breakdown</span>
+                    <span className="block text-[10px] uppercase tracking-wider text-slate-500 font-semibold">{t("contact.estimator.breakdown")}</span>
                     <div className="space-y-2 text-[10px]">
                       <div>
                         <div className="flex justify-between text-slate-400 mb-1">
-                          <span>Foundation & excavation (30%)</span>
+                          <span>{t("contact.estimator.foundation")}</span>
                           <span className="text-white">{(currentEst.total * 0.3).toLocaleString("fi-FI", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })}</span>
                         </div>
                         <div className="w-full bg-navy-dark h-1 rounded overflow-hidden">
@@ -328,7 +338,7 @@ export default function ContactPage() {
 
                       <div>
                         <div className="flex justify-between text-slate-400 mb-1">
-                          <span>Concrete Core & Steel Framing (40%)</span>
+                          <span>{t("contact.estimator.concrete")}</span>
                           <span className="text-white">{(currentEst.total * 0.4).toLocaleString("fi-FI", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })}</span>
                         </div>
                         <div className="w-full bg-navy-dark h-1 rounded overflow-hidden">
@@ -338,7 +348,7 @@ export default function ContactPage() {
 
                       <div>
                         <div className="flex justify-between text-slate-400 mb-1">
-                          <span>Insulated Facade & Glazing (20%)</span>
+                          <span>{t("contact.estimator.facade")}</span>
                           <span className="text-white">{(currentEst.total * 0.2).toLocaleString("fi-FI", { style: "currency", currency: "EUR", maximumFractionDigits: 0 })}</span>
                         </div>
                         <div className="w-full bg-navy-dark h-1 rounded overflow-hidden">
@@ -656,7 +666,7 @@ export default function ContactPage() {
                     onClick={() => alert("Simulated zoom-in at: " + offices[activeOffice].lat)}
                     className="bg-navy-light border border-white/5 hover:border-orange-accent/50 rounded py-1 px-2 text-[10px] font-bold text-slate-300 cursor-pointer font-manrope"
                   >
-                    Zoom In
+                    {t("contact.estimator.zoom")}
                   </button>
                   <a 
                     href={`https://maps.google.com/?q=${encodeURIComponent(offices[activeOffice].address)}`}
@@ -664,7 +674,7 @@ export default function ContactPage() {
                     rel="noreferrer"
                     className="bg-orange-accent rounded py-1 px-2 text-[10px] font-bold text-white hover:bg-orange-hover flex items-center gap-0.5 font-manrope cursor-pointer"
                   >
-                    Directions <ChevronRight className="w-3 h-3" />
+                    {t("contact.estimator.directions")} <ChevronRight className="w-3 h-3" />
                   </a>
                 </div>
               </div>

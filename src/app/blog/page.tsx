@@ -8,17 +8,35 @@ import { FadeIn, ScrollReveal, StaggerContainer, ScaleHover } from "@/components
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function BlogPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
 
   const categories = ["All", "Trends", "Case Study", "News", "Insights"];
 
-  const filteredArticles = activeFilter === "All"
-    ? blogArticles
-    : blogArticles.filter(art => art.category === activeFilter);
+  const localizedArticles = blogArticles.map((article) => {
+    if (lang === "fi") {
+      switch (article.id) {
+        case "winter-construction-protocols":
+          return { ...article, title: "Turvallisuusstandardeista äärimmäisissä pohjoismaisissa talviolosuhteissa", category: "Insights", excerpt: "Monimutkaisten rakenteiden rakentaminen pakkasessa vaatii erityisiä protokollia. Lue menetelmistämme betonin esilämmityksessä, jääpoistossa ja työvoiman lämmityksessä.", content: "Pohjoismainen talvibetonirakentaminen asettaa ainutlaatuisia fyysisiä ja ympäristöllisiä haasteita. Rakentra Worksin talvioperatiivinen protokolla perustuu kolmeen pylvääseen: betonin lämpötilanhallintaan, työvoiman mikroilmaston suojaukseen ja tukevien maaperän kuormituskirjanpitoon." };
+        case "green-concrete-advancements":
+          return { ...article, title: "Low-carbon-betoni tulevaisuus Suomessa", category: "Trends", excerpt: "Betoni aiheuttaa 8 % maailman CO2-päästöistä. Rakentra testaa low-carbon-muurausbetonia teollisuuspohjissa vähentääkseen hiilijalanjälkeä 40 %.", content: "Suomen tiukkojen hiilineutraaliustavoitteiden vuoksi rakentaminen on kokemassa nopeaa siirtymää. Rakentra Works on yhteistyössä paikallisten sementin valmistajien kanssa integroinut GGBS-ratkaisun betonimixeihin." };
+        case "historical-restoration-challenges":
+          return { ...article, title: "Historiallisten julkisivujen modernisointi: Aura Riverfront -tapaustutkimus", category: "Case Study", excerpt: "19. vuosisadan rakennusten restaurointi on historian säilyttämistä ja nykyaikaisten koodien yhdistämistä. Lue siitä, kuinka vahvistimme teräsydämet puupohjiin.", content: "Historiallisten rakennusten restaurointi vaatii perinteisen käsityön ja raskaan insinöörityön yhdistämistä. Päähaasteena oli, että rakennus oli perustettu lahonneisiin puupaaluihin." };
+        case "tampere-logistics-hub-contract":
+          return { ...article, title: "Rakentra Works sai Tampereen smart-logistiikkakeskuksen sopimuksen", category: "News", excerpt: "Olemme virallisesti allekirjoittaneet 34,5 miljoonan euron sopimuksen Tampereen Smart Logistics Hubin rakenteellisesta ydin- ja ulkovaipasta.", content: "Rakentra Works on allekirjoittanut rakennussopimuksen Tampere Developments Oy:n kanssa Hervannan smart-logistiikkakeskuksen rungosta ja ulkovaipasta." };
+        default:
+          return article;
+      }
+    }
+    return article;
+  });
 
-  const activeArticle = blogArticles.find(art => art.id === selectedArticleId);
+  const filteredArticles = activeFilter === "All"
+    ? localizedArticles
+    : localizedArticles.filter(art => art.category === activeFilter);
+
+  const activeArticle = localizedArticles.find(art => art.id === selectedArticleId);
 
   const getTagColor = (cat: string) => {
     switch (cat) {
@@ -120,7 +138,7 @@ export default function BlogPage() {
 
                     {/* Author & Read More Bar */}
                     <div className="px-6 pb-6 pt-3 border-t border-white/5 flex justify-between items-center text-xs font-inter">
-                      <span className="text-slate-500 font-medium">By: {article.author.split(' ')[0]}</span>
+                      <span className="text-slate-500 font-medium">{t("blog.by")} {article.author.split(' ')[0]}</span>
                       <button
                         onClick={() => setSelectedArticleId(article.id)}
                         className="inline-flex items-center font-bold uppercase tracking-wider text-orange-accent hover:text-white transition-colors group/btn cursor-pointer"
@@ -171,16 +189,16 @@ export default function BlogPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <button className="p-1.5 hover:bg-white/5 rounded text-slate-400 hover:text-white cursor-pointer" title="Bookmark article">
+                  <button className="p-1.5 hover:bg-white/5 rounded text-slate-400 hover:text-white cursor-pointer" title={t("blog.bookmarkTitle")}>
                     <Bookmark className="w-4.5 h-4.5" />
                   </button>
-                  <button className="p-1.5 hover:bg-white/5 rounded text-slate-400 hover:text-white cursor-pointer" title="Share article">
+                  <button className="p-1.5 hover:bg-white/5 rounded text-slate-400 hover:text-white cursor-pointer" title={t("blog.shareTitle")}>
                     <Share2 className="w-4.5 h-4.5" />
                   </button>
                   <button 
                     onClick={() => setSelectedArticleId(null)}
                     className="p-1.5 hover:bg-white/5 rounded text-slate-400 hover:text-white cursor-pointer"
-                    title="Close drawer"
+                    title={t("blog.drawerTitle")}
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -226,10 +244,10 @@ export default function BlogPage() {
                       {activeArticle.content}
                     </p>
                     <p>
-                      In addition to structural benchmarks, Rakentra Works remains committed to tracking thermal envelope efficiency indexes. The transition to low-carbon concrete composites represents our dedication to complying with municipal climate neutrality aims in Helsinki, Espoo, and Tampere.
+                      {t("blog.article.note")}
                     </p>
                     <p>
-                      Subsequent phases of this technical design standard will encompass thermal telemetry and drone-mapped thermal inspections to check for heat leakages, establishing Rakentra as Finland's leading digitized engineering partner.
+                      {t("blog.article.followup")}
                     </p>
                   </div>
                 </div>

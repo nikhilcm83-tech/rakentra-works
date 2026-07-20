@@ -6,7 +6,45 @@ import { FadeIn, ScrollReveal, StaggerContainer } from "@/components/Animate";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function EquipmentPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localizedFleet = machineryFleet.map((item) => {
+    if (lang === "fi") {
+      switch (item.name) {
+        case "Liebherr LTM 1300 Mobile Crane":
+          return { ...item, name: "Liebherr LTM 1300 -siirrettävä nosturi", spec: "300 tonnin nostokapasiteetti, 78 m piippu", category: "Nostotyö" };
+        case "Caterpillar 349 Excavator":
+          return { ...item, name: "Caterpillar 349 -kaivinkone", spec: "53 tonnin paino, älykäs GPS-tasaustekniikka", category: "Maansiirto" };
+        case "Volvo FMX Tipper Truck Fleet":
+          return { ...item, name: "Volvo FMX -kippiautopooli", spec: "Raskas 8x4-kokoonpano, Euro 6 -polttoainetaloudellinen", category: "Logistiikka" };
+        case "Putzmeister M38 Concrete Boom Pump":
+          return { ...item, name: "Putzmeister M38 -betonipumppu", spec: "38 m pystysuora kantama, 160 m³/h toimitus", category: "Betonin asennus" };
+        case "Komatsu D65 Intelligent Bulldozer":
+          return { ...item, name: "Komatsu D65 -älykäyttöinen puskutraktori", spec: "BIM-integroitu korkeusohjain", category: "Maansiirto" };
+        default:
+          return item;
+      }
+    }
+    return item;
+  });
+
+  const localizedTech = highTechSystems.map((item) => {
+    if (lang === "fi") {
+      switch (item.name) {
+        case "BIM Level 3 Collaboration":
+          return { ...item, name: "BIM-taso 3 -yhteistyö", desc: "Mahdollistaa reaaliaikaisen koordinoinnin MEP- ja rakennesuunnittelun välillä ennen tuotantoa." };
+        case "Thermal Drone Surveying":
+          return { ...item, name: "Lämpödronekartoitus", desc: "Käyttää korkean tarkkuuden FLIR-kameroita lämpöeristysvaurioiden tunnistamiseen." };
+        case "GPS-Guided Precision Excavation":
+          return { ...item, name: "GPS-ohjattu tarkka kaivuu", desc: "Kaivinkoneet ladataan suoraan CAD-malleista, automaattinen kaivuu tarkkuudella +/- 20 mm." };
+        case "IoT Concrete Maturity Sensors":
+          return { ...item, name: "IoT-betoniikääntymisanturit", desc: "Anturit lähettävät hydrolyysilämpötilatietoja langattomasti." };
+        default:
+          return item;
+      }
+    }
+    return item;
+  });
 
   const getTechIcon = (idx: number) => {
     switch (idx) {
@@ -74,14 +112,14 @@ export default function EquipmentPage() {
                 <table className="w-full text-left text-xs border-collapse font-inter">
                   <thead>
                     <tr className="bg-navy-dark border-b border-white/10 text-slate-400 font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 font-manrope">Machinery Name</th>
-                      <th className="py-4 px-6 font-manrope">Category</th>
-                      <th className="py-4 px-6 font-manrope">Technical Specifications</th>
-                      <th className="py-4 px-6 text-center font-manrope">In Service</th>
+                      <th className="py-4 px-6 font-manrope">{t("equipment.fleet.col.name")}</th>
+                      <th className="py-4 px-6 font-manrope">{t("equipment.fleet.col.category")}</th>
+                      <th className="py-4 px-6 font-manrope">{t("equipment.fleet.col.spec")}</th>
+                      <th className="py-4 px-6 text-center font-manrope">{t("equipment.fleet.col.count")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
-                    {machineryFleet.map((item, idx) => {
+                    {localizedFleet.map((item, idx) => {
                       const FleetIcon = getFleetIcon(item.category);
                       return (
                         <tr key={idx} className="hover:bg-white/2 transition-colors">
@@ -100,7 +138,7 @@ export default function EquipmentPage() {
                             {item.spec}
                           </td>
                           <td className="py-4.5 px-6 text-center font-bold text-white">
-                            {item.count} units
+                            {item.count} {t("equipment.fleet.units")}
                           </td>
                         </tr>
                       );
@@ -118,19 +156,19 @@ export default function EquipmentPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">INNOVATION</span>
+              <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">{t("equipment.tech.badge")}</span>
               <h2 className="text-3xl font-manrope font-extrabold text-white tracking-tight">
-                BIM & Smart Site Technology
+                {t("equipment.tech.h")}
               </h2>
               <p className="text-sm text-slate-400 font-inter">
-                We leverage cloud collaboration and IoT telemetry to reduce design conflicts, monitor materials in real time, and guarantee energy metrics.
+                {t("equipment.tech.desc")}
               </p>
             </div>
           </ScrollReveal>
 
           <StaggerContainer>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {highTechSystems.map((item, idx) => {
+              {localizedTech.map((item, idx) => {
                 const TechIcon = getTechIcon(idx);
                 return (
                   <ScrollReveal key={idx}>
@@ -156,19 +194,19 @@ export default function EquipmentPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <ScrollReveal>
             <div className="space-y-6">
-              <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">HSE COMPLIANCE</span>
+              <span className="text-xs font-bold text-orange-accent uppercase tracking-widest block font-manrope">{t("equipment.safety.badge")}</span>
               <h2 className="text-3xl font-manrope font-extrabold text-white tracking-tight">
-                Safety Equipment Standard
+                {t("equipment.safety.h")}
               </h2>
               <p className="text-sm text-slate-400 leading-relaxed font-inter">
-                Every worker, subcontractor, and guest stepping onto a Rakentra Works construction site is equipped with high-performance, weather-resilient safety apparel.
+                {t("equipment.safety.desc")}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { title: "Active Bluetooth Hardhats", desc: "Equipped with sensors checking impact and live location alerts." },
-                  { title: "Winter Safety Footwear", desc: "Thermal lining and custom metal studs to prevent slip injury." },
-                  { title: "Premium Fall Protection", desc: "Full-body harnesses certified under European EN 361 criteria." },
-                  { title: "High-Visibility LED Vests", desc: "Active fiber-optic glowing panels to maintain site visibility." }
+                  { title: t("equipment.safety.item.0.title"), desc: t("equipment.safety.item.0.desc") },
+                  { title: t("equipment.safety.item.1.title"), desc: t("equipment.safety.item.1.desc") },
+                  { title: t("equipment.safety.item.2.title"), desc: t("equipment.safety.item.2.desc") },
+                  { title: t("equipment.safety.item.3.title"), desc: t("equipment.safety.item.3.desc") }
                 ].map((item, idx) => (
                   <div key={idx} className="p-4 bg-navy-light/40 border border-white/5 rounded-lg space-y-1 hover:border-orange-accent/20 transition-colors duration-300">
                     <h4 className="text-xs font-bold text-white flex items-center gap-1.5 font-manrope">
@@ -193,8 +231,8 @@ export default function EquipmentPage() {
               <div className="absolute bottom-4 left-4 right-4 p-4 bg-navy-dark/90 border border-white/5 rounded-lg flex items-center gap-3">
                 <ShieldCheck className="w-8 h-8 text-orange-accent shrink-0" />
                 <div>
-                  <span className="text-[10px] text-slate-500 uppercase tracking-widest block font-bold font-manrope">SAFETY RECORD</span>
-                  <span className="text-xs font-bold text-white font-manrope">100% compliant safety equipment checkpoints.</span>
+                  <span className="text-[10px] text-slate-500 uppercase tracking-widest block font-bold font-manrope">{t("equipment.safety.recordLabel")}</span>
+                  <span className="text-xs font-bold text-white font-manrope">{t("equipment.safety.recordText")}</span>
                 </div>
               </div>
             </div>

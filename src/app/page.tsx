@@ -11,7 +11,63 @@ import { FadeIn, ScrollReveal, StaggerContainer, ScaleHover, Counter } from "@/c
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localizedServices = services.map((service) => {
+    if (lang === "fi") {
+      switch (service.id) {
+        case "commercial":
+          return { ...service, title: "Toimitilarakentaminen", overview: "Suunnittelemme ja rakennamme moderneja toimistotorneja, vähittäiskeskuksia, liikekeskuksia ja monikäyttöisiä kehityshankkeita. Keskitymme arkkitehtoniseen estetiikkaan, tilatehokkuuteen ja energiatehokkuuteen." };
+        case "residential":
+          return { ...service, title: "Asuinrakentaminen", overview: "Luxusvinttisistä rantatonteista premium kerrostaloihin — Rakentra on tunnettu miellyttävästä, korkealaatuisesta asumisesta Suomessa." };
+        case "industrial":
+          return { ...service, title: "Teollisuus & logistiikka", overview: "Rakennamme raskaita tuotantolaitoksia, automaattisia logistiikkavarastoja ja puhtaiden teknologioiden energiahuoneita." };
+        case "infrastructure":
+          return { ...service, title: "Siviili-infrastruktuuri", overview: "Yhdistämme Suomen yhteisöjä kestävillä teillä, suurkuormitusraiteilla, silloilla ja julkisilla liikennekeskuksilla." };
+        case "renovation":
+          return { ...service, title: "Perinnesarja- ja saneeraus", overview: "Kunnostamme ja modernisoimme olemassa olevia rakenteita säilyttäen historialliset julkisivut." };
+        case "pm":
+          return { ...service, title: "Projektinhallinta", overview: "Kokonaisvaltainen projektinhallinta monimutkaisissa rakennushankkeissa aina suunnittelusta luovutukseen." };
+        default:
+          return service;
+      }
+    }
+    return service;
+  });
+
+  const localizedProjects = projects.map((project) => {
+    const category = lang === "fi"
+      ? project.category === "Commercial"
+        ? "Toimitilat"
+        : project.category === "Residential"
+          ? "Asuinrakennukset"
+          : project.category === "Industrial"
+            ? "Teollisuus"
+            : project.category === "Infrastructure"
+              ? "Infrastruktuuri"
+              : project.category === "Renovation"
+                ? "Saneeraus"
+                : project.category
+      : project.category;
+
+    if (lang === "fi") {
+      switch (project.id) {
+        case "helsinki-innovation-hub":
+          return { ...project, category, overview: "Lippulaivakaupallinen toimistokeskus, joka on suunniteltu suomalaisille startup-yrityksille ja kansainvälisille tutkimusryhmille." };
+        case "tampere-battery-factory":
+          return { ...project, category, title: "Tampereen vihreä akkuplantti", location: "Hervanta, Tampere", overview: "Monimutkainen teollisuuslaitos, joka on tarkoitettu litiumioniakkujen valmistukseen sähköalustoille." };
+        case "espoo-marina-residences":
+          return { ...project, category, overview: "Premium-vesirantainen asuntokehitys, jossa on 48 luksusasuntoa ja integroituja saunoja." };
+        case "oulu-light-rail":
+          return { ...project, category, overview: "Kriittinen infrastruktuurihanke, joka yhdistää pre-stressed betonisillan ja uuden raitiotieyhteyden." };
+        case "turku-heritage-hotel":
+          return { ...project, category, overview: "Huolellinen historiallinen restaurointi, joka yhdistää nykyaikaisen teknologian suojeltuun julkisivuun." };
+        default:
+          return { ...project, category };
+      }
+    }
+    return { ...project, category };
+  });
 
   const getIcon = (name: string) => {
     switch (name) {
@@ -191,7 +247,7 @@ export default function HomePage() {
 
           <StaggerContainer>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.slice(0, 6).map((service) => {
+              {localizedServices.slice(0, 6).map((service) => {
                 const ServiceIcon = getServiceIcon(service.id);
                 return (
                   <ScrollReveal key={service.id}>
@@ -268,7 +324,7 @@ export default function HomePage() {
 
           <StaggerContainer>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {projects.slice(0, 2).map((project) => (
+              {localizedProjects.slice(0, 2).map((project) => (
                 <ScrollReveal key={project.id}>
                   <div className="group card-hover rounded-xl border border-white/10 overflow-hidden flex flex-col h-full" style={{ background: "linear-gradient(160deg, #111827 0%, #0D1424 100%)" }}>
                     {/* Large Image */}
