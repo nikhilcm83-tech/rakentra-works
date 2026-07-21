@@ -121,63 +121,53 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="max-w-3xl space-y-8">
             
-            <FadeIn delay={0.05}>
-              <div className="badge-pill">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-accent animate-pulse" />
-                {t("hero.badge")}
-              </div>
-            </FadeIn>
+            <div className="badge-pill animate-fade-in">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-accent animate-pulse" />
+              {t("hero.badge")}
+            </div>
 
-            <FadeIn delay={0.15} duration={0.7}>
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-manrope font-extrabold tracking-tight text-white leading-[1.0]">
-                {t("hero.h1a")}<br />
-                {t("hero.h1b")}{" "}
-                <span className="text-gradient-orange">{t("hero.h1c")}</span>
-              </h1>
-            </FadeIn>
+            <h1 className="text-5xl sm:text-6xl lg:text-8xl font-manrope font-extrabold tracking-tight text-white leading-[1.0] animate-fade-in-up">
+              {t("hero.h1a")}<br />
+              {t("hero.h1b")}{" "}
+              <span className="text-gradient-orange">{t("hero.h1c")}</span>
+            </h1>
 
-            <FadeIn delay={0.25} duration={0.65}>
-              <p className="text-lg sm:text-xl text-frost-dim font-inter font-normal leading-relaxed max-w-2xl">
-                {t("hero.desc")}
-              </p>
-            </FadeIn>
+            <p className="text-lg sm:text-xl text-frost-dim font-inter font-normal leading-relaxed max-w-2xl animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+              {t("hero.desc")}
+            </p>
 
-            <FadeIn delay={0.35} duration={0.6}>
-              <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                <Link
-                  href="/projects"
-                  className="group inline-flex items-center justify-center gap-2.5 px-9 py-4 bg-orange-accent hover:bg-orange-hover text-white text-sm font-bold tracking-wider uppercase rounded-md shadow-2xl shadow-orange-accent/20 transition-all duration-250 hover:-translate-y-0.5 hover:shadow-orange-accent/35"
-                >
-                  {t("hero.viewProjects")}
-                  <ArrowRight className="w-4 h-4 transition-transform duration-250 group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-9 py-4 bg-white/5 hover:bg-white/10 text-white text-sm font-bold tracking-wider uppercase border border-white/15 hover:border-white/30 rounded-md backdrop-blur-sm transition-all duration-250 hover:-translate-y-0.5"
-                >
-                  {t("hero.requestQuote")}
-                </Link>
-              </div>
-            </FadeIn>
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+              <Link
+                href="/projects"
+                className="group inline-flex items-center justify-center gap-2.5 px-9 py-4 bg-orange-accent hover:bg-orange-hover text-white text-sm font-bold tracking-wider uppercase rounded-md shadow-2xl shadow-orange-accent/20 transition-all duration-250 hover:-translate-y-0.5 hover:shadow-orange-accent/35"
+              >
+                {t("hero.viewProjects")}
+                <ArrowRight className="w-4 h-4 transition-transform duration-250 group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 px-9 py-4 bg-white/5 hover:bg-white/10 text-white text-sm font-bold tracking-wider uppercase border border-white/15 hover:border-white/30 rounded-md backdrop-blur-sm transition-all duration-250 hover:-translate-y-0.5"
+              >
+                {t("hero.requestQuote")}
+              </Link>
+            </div>
 
             {/* Trust indicators */}
-            <FadeIn delay={0.45}>
-              <div className="flex items-center gap-6 pt-2">
-                <div className="flex -space-x-2">
-                  {["HK","EM","MK"].map((initials, i) => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-navy-deep bg-navy-light flex items-center justify-center text-[9px] font-bold text-slate-300">
-                      {initials}
-                    </div>
-                  ))}
-                </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <div className="flex">
-                    {[...Array(5)].map((_,i) => <Star key={i} className="w-3 h-3 text-orange-glow fill-orange-glow" />)}
+            <div className="flex items-center gap-6 pt-2 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+              <div className="flex -space-x-2">
+                {["HK","EM","MK"].map((initials, i) => (
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-navy-deep bg-navy-light flex items-center justify-center text-[9px] font-bold text-slate-300">
+                    {initials}
                   </div>
-                  <span><strong className="text-white">98%</strong> {t("hero.trust")}</span>
-                </div>
+                ))}
               </div>
-            </FadeIn>
+              <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                <div className="flex">
+                  {[...Array(5)].map((_,i) => <Star key={i} className="w-3 h-3 text-orange-glow fill-orange-glow" />)}
+                </div>
+                <span><strong className="text-white">98%</strong> {t("hero.trust")}</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -258,6 +248,8 @@ export default function HomePage() {
                           <img
                             src={service.image}
                             alt={service.title}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             style={{ filter: "brightness(0.75) saturate(0.9)" }}
                           />
@@ -332,6 +324,8 @@ export default function HomePage() {
                       <img
                         src={project.image}
                         alt={project.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         style={{ filter: "brightness(0.7) saturate(0.85)" }}
                       />

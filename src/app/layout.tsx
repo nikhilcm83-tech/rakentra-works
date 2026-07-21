@@ -8,13 +8,17 @@ import "./globals.css";
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["700", "800"],
+  display: "swap",
+  preload: true,
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -34,6 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
+const HERO_IMAGE = "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2000&auto=format&fit=crop";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,6 +51,15 @@ export default function RootLayout({
       className={`${manrope.variable} ${inter.variable} h-full antialiased dark`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        {/* Preload the hero background image — browser fetches it at highest priority */}
+        <link
+          rel="preload"
+          as="image"
+          href={HERO_IMAGE}
+          fetchPriority="high"
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-navy-deep text-slate-100 font-inter pt-[80px]">
         <LanguageProvider>
           <Navbar />

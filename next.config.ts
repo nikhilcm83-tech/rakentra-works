@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Optimize imports — tree-shakes lucide-react & framer-motion bundles
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion"],
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
