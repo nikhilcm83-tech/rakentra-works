@@ -10,6 +10,7 @@ import {
   HardHat, Laptop, ArrowUpRight, HelpCircle, Briefcase, FileText, Phone, Globe
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Logo from "@/components/Logo";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,16 +78,10 @@ export default function Navbar() {
         : "bg-transparent"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center h-14">
+        <div className="relative flex items-center h-20 sm:h-24">
 
           {/* ── LEFT: Logo ── */}
-          <Link href="/" className="flex items-center space-x-2 group shrink-0">
-            <span className="font-manrope font-extrabold text-xl tracking-wider text-white flex items-center">
-              RAKENTRA
-              <span className="text-orange-accent ml-1 font-black group-hover:text-orange-glow transition-colors duration-200">//</span>
-              <span className="text-[8px] text-steel-gray font-normal tracking-[0.2em] ml-2 self-end mb-0.5 hidden sm:inline-block">WORKS</span>
-            </span>
-          </Link>
+          <Logo variant="horizontal" height={80} showTagline={false} />
 
           {/* ── CENTRE: Desktop Nav (absolutely centred in the bar) ── */}
           <nav className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
@@ -212,124 +207,119 @@ export default function Navbar() {
       </div>
 
 
-      {/* Mobile Drawer */}
+      {/* Mobile Fullscreen Navigation Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-            />
-
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              className="fixed inset-y-0 right-0 w-full max-w-sm h-screen bg-navy-deep border-l border-white/5 z-50 flex flex-col lg:hidden"
-            >
-              <div className="flex-1 overflow-y-auto px-6 pt-6 pb-6">
-                <div className="flex justify-between items-center pb-6 border-b border-white/5">
-                  <span className="font-manrope font-extrabold text-2xl tracking-wider text-white">
-                    RAKENTRA<span className="text-orange-accent">//</span>
-                  </span>
-                  <div className="flex items-center gap-3">
-                    {/* Mobile lang toggle */}
-                    <div className="flex items-center gap-1 bg-navy-light/60 border border-white/10 rounded-lg p-1">
-                      <button
-                        onClick={() => setLang("en")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all duration-200 cursor-pointer ${
-                          lang === "en" ? "bg-orange-accent text-white" : "text-slate-400 hover:text-white"
-                        }`}
-                      >EN</button>
-                      <button
-                        onClick={() => setLang("fi")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all duration-200 cursor-pointer ${
-                          lang === "fi" ? "bg-orange-accent text-white" : "text-slate-400 hover:text-white"
-                        }`}
-                      >FI</button>
-                    </div>
-                    <button onClick={() => setIsOpen(false)} className="p-2 text-slate-300 hover:text-white">
-                      <X className="w-6 h-6" />
-                    </button>
-                  </div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ type: "tween", duration: 0.25 }}
+            className="fixed inset-0 w-screen h-screen bg-navy-deep/98 backdrop-blur-2xl z-50 flex flex-col lg:hidden overflow-hidden"
+          >
+            {/* Header bar inside fullscreen drawer */}
+            <div className="px-4 sm:px-6 py-4 flex justify-between items-center border-b border-white/10 shrink-0">
+              <Logo variant="horizontal" height={60} showTagline={false} />
+              <div className="flex items-center gap-3">
+                {/* Mobile lang toggle */}
+                <div className="flex items-center gap-1 bg-navy-light/80 border border-white/10 rounded-lg p-1">
+                  <button
+                    onClick={() => setLang("en")}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all duration-200 cursor-pointer ${
+                      lang === "en" ? "bg-orange-accent text-white" : "text-slate-400 hover:text-white"
+                    }`}
+                  >EN</button>
+                  <button
+                    onClick={() => setLang("fi")}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all duration-200 cursor-pointer ${
+                      lang === "fi" ? "bg-orange-accent text-white" : "text-slate-400 hover:text-white"
+                    }`}
+                  >FI</button>
                 </div>
-
-                <div className="mt-8 space-y-4">
-                  {navLinks.map((link) => {
-                    const hasDropdown = !!link.dropdown;
-                    const isActive = pathname === link.href;
-
-                    return (
-                      <div key={link.href} className="space-y-2">
-                        {hasDropdown ? (
-                          <>
-                            <button
-                              onClick={() => setActiveDropdown(activeDropdown === link.href ? null : link.href)}
-                              className="w-full flex items-center justify-between py-2 text-base font-semibold text-slate-200 hover:text-white"
-                            >
-                              {link.name}
-                              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
-                                activeDropdown === link.href ? "rotate-180" : ""
-                              }`} />
-                            </button>
-                            <AnimatePresence>
-                              {activeDropdown === link.href && (
-                                <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: "auto", opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  className="pl-4 space-y-3 overflow-hidden"
-                                >
-                                  {link.dropdown?.map((item) => (
-                                    <Link
-                                      key={item.name}
-                                      href={item.href}
-                                      className="block py-2 text-sm text-slate-400 hover:text-orange-accent transition-colors"
-                                      onClick={() => setIsOpen(false)}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            className={`block py-2 text-base font-semibold transition-colors ${
-                              isActive ? "text-orange-accent" : "text-slate-200 hover:text-white"
-                            }`}
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {link.name}
-                          </Link>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="border-t border-white/5 px-6 py-6 space-y-4 bg-navy-deep/90">
-                <div className="flex items-center gap-3 text-slate-400">
-                  <Phone className="w-5 h-5 text-orange-accent" />
-                  <span className="text-sm font-medium">+358 10 234 5678</span>
-                </div>
-                <Link
-                  href="/contact"
-                  className="w-full flex items-center justify-center py-3 bg-orange-accent hover:bg-orange-hover text-white text-sm font-bold tracking-wider uppercase rounded-md shadow-lg"
+                <button
                   onClick={() => setIsOpen(false)}
+                  className="p-2 text-slate-300 hover:text-white bg-white/5 rounded-lg border border-white/10"
+                  aria-label="Close menu"
                 >
-                  {t("nav.requestQuote")}
-                </Link>
+                  <X className="w-7 h-7 text-white" />
+                </button>
               </div>
-            </motion.div>
-          </>
+            </div>
+
+            {/* Navigation links area */}
+            <div className="flex-1 overflow-y-auto px-6 py-8 space-y-6">
+              <div className="space-y-4">
+                {navLinks.map((link) => {
+                  const hasDropdown = !!link.dropdown;
+                  const isActive = pathname === link.href;
+
+                  return (
+                    <div key={link.href} className="border-b border-white/5 pb-4">
+                      {hasDropdown ? (
+                        <>
+                          <button
+                            onClick={() => setActiveDropdown(activeDropdown === link.href ? null : link.href)}
+                            className="w-full flex items-center justify-between py-2 text-xl font-bold tracking-wide text-slate-100 hover:text-orange-accent transition-colors"
+                          >
+                            <span>{link.name}</span>
+                            <ChevronDown className={`w-5 h-5 text-orange-accent transition-transform duration-200 ${
+                              activeDropdown === link.href ? "rotate-180" : ""
+                            }`} />
+                          </button>
+                          <AnimatePresence>
+                            {activeDropdown === link.href && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="pl-4 pt-2 space-y-3 overflow-hidden border-l-2 border-orange-accent/40 my-2"
+                              >
+                                {link.dropdown?.map((item) => (
+                                  <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className="block py-2 text-base font-medium text-slate-300 hover:text-white transition-colors"
+                                    onClick={() => setIsOpen(false)}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className={`block py-2 text-xl font-bold tracking-wide transition-colors ${
+                            isActive ? "text-orange-accent" : "text-slate-100 hover:text-white"
+                          }`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {link.name}
+                        </Link>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bottom Footer Actions */}
+            <div className="border-t border-white/10 px-6 py-6 space-y-4 bg-navy-deep/95 shrink-0">
+              <div className="flex items-center gap-3 text-slate-300 justify-center">
+                <Phone className="w-5 h-5 text-orange-accent" />
+                <span className="text-base font-semibold">+358 10 234 5678</span>
+              </div>
+              <Link
+                href="/contact"
+                className="w-full flex items-center justify-center py-4 bg-orange-accent hover:bg-orange-hover text-white text-base font-extrabold tracking-wider uppercase rounded-xl shadow-xl shadow-orange-accent/20 transition-all duration-200"
+                onClick={() => setIsOpen(false)}
+              >
+                {t("nav.requestQuote")}
+              </Link>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

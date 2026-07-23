@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     locale: "en_FI",
     siteName: "Rakentra Works",
   },
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 const HERO_IMAGE = "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2000&auto=format&fit=crop";
@@ -60,7 +65,7 @@ export default function RootLayout({
           fetchPriority="high"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-navy-deep text-slate-100 font-inter pt-[80px]">
+      <body className="min-h-full flex flex-col bg-navy-deep text-slate-100 font-inter pt-[96px] sm:pt-[104px]">
         <LanguageProvider>
           <Navbar />
           <main className="flex-grow">

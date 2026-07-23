@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, CheckCircle } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Logo from "@/components/Logo";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -35,9 +36,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Info */}
           <div className="space-y-6">
-            <span className="font-manrope font-extrabold text-2xl tracking-wider text-white">
-              RAKENTRA<span className="text-orange-accent">//</span>
-            </span>
+            <Logo variant="full" className="w-72 sm:w-80 text-left items-start" />
             <p className="text-sm text-slate-400 leading-relaxed">
               {t("footer.aboutText")}
             </p>
